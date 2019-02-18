@@ -3,9 +3,6 @@ package com.jyy.LocalCacheUtils;
 public class TestLocalCacheUtils {
 
     public static void main(String[] args) {
-
-        RedisKeyLiveTime.getEnumStrArray();
-
         long beginTime = System.currentTimeMillis();
         Thread t1 = new Thread(new ExecuteInvokeTimeClass());
         t1.setPriority(6);
@@ -25,8 +22,8 @@ public class TestLocalCacheUtils {
         @Override
         public void run() {
             for (int i = 0; i<510; i++) {
-                LocalCacheUtils.increaseInvokeTime("8005235", "QueryRoomFreeWithActivityList_seven1");
-//                LocalCacheUtils2.increaseInvokeTime("8005236", "QueryRoomFreeWithActivityList_seven");
+//                LocalCacheUtils.increaseInvokeTime("8005235", "QueryRoomFreeWithActivityList_seven");
+                LocalCacheUtils2.increaseInvokeTime("8005236", "QueryRoomFreeWithActivityList_seven");
             }
             System.out.println("end");
         }
