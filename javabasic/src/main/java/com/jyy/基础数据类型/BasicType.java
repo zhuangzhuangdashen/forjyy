@@ -4,6 +4,12 @@ public class BasicType {
 
     public static void main(String[] args) {
         /**
+         * 注意：
+         * 在开发中虽然内存越来越不值钱，但是程序部署的内存依然是有限的；
+         * 虽然jvm会对数据类型的内存做优化，但java在控制数据类型申请内存这块并不是主要工作也不擅长，因此
+         * 在初始化数据类型的时候，不要过多的申请无用的内存，造成内存的开销，也会造成jvm垃圾收集器的压力。
+         */
+        /**
          * JAVA基本数据类型
          * 4类8种
          * 整型 byte short int long
@@ -11,6 +17,7 @@ public class BasicType {
          * 浮点型 float double
          * 布尔型 boolean
          *
+         *  float的有效位是7位，double的有效位是14位
          *
          * 占用字节数
          *          boolean 1 byte 1 short 2 char 2 int 4 float 4
