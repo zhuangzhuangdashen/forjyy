@@ -2,6 +2,11 @@ package com.jyy.synchronizedtest;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * 如果使用普通版的Integer，那么打印的结果会有脏数据
+ *
+ * 改进版 使用原子的Integer 和 volatile 直接覆盖synchronized锁的作用(饱和锁)
+ */
 public class TestSynchronizeInteger {
 
     static volatile AtomicInteger init = new AtomicInteger(0);
