@@ -3,9 +3,8 @@ package com.jyy.LocalCacheUtils;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by LIZHUANGZHUANG001 on 2019/2/18.
@@ -13,7 +12,7 @@ import java.util.Map;
  *
  */
 public class LocalCacheUtilsForDBDataEnhance {
-    public static volatile Map<String, List> businessData = new HashMap<>();
+    public static volatile ConcurrentHashMap<String, List> businessData = new ConcurrentHashMap<>();
 
     /**
      * 写缓存加锁 避免多个线程同时写
@@ -30,7 +29,7 @@ public class LocalCacheUtilsForDBDataEnhance {
         Assert.notNull(businessKey, "businessKey can not be null");
 
         if (CollectionUtils.isEmpty(businessData)) {
-            businessData = new HashMap<>();
+            businessData = new ConcurrentHashMap<>();
         }
         businessData.put(businessKey, cacheData);
     }
@@ -44,7 +43,7 @@ public class LocalCacheUtilsForDBDataEnhance {
         Assert.notNull(businessKey, "businessKey can not be null");
 
         if (CollectionUtils.isEmpty(businessData)) {
-            businessData = new HashMap<>();
+            businessData = new ConcurrentHashMap<>();
             businessData.put(businessKey, cacheData);
             return;
         }

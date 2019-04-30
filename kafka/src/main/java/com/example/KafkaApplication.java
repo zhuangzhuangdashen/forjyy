@@ -1,13 +1,13 @@
-package com.forjyy.springproject;
+package com.example;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
-public class SpringprojectApplication {
+@SpringBootApplication(scanBasePackages = "com.example")
+public class KafkaApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringprojectApplication.class, args);
+        SpringApplication.run(KafkaApplication.class, args);
     }
 
 }

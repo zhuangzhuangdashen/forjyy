@@ -28,7 +28,7 @@ public class GenericTypeTest<T, S> {
     }
 
     public static void main(String[] args) {
-        GenericTypeTest<Integer, S> test = new GenericTypeTest<>();
+        GenericTypeTest<Integer, String> test = new GenericTypeTest<>();
         test.add(1);
     }
 }
