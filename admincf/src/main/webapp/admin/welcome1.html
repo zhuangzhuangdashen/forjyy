@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+    <head>
+        <meta charset="UTF-8">
+        <title>欢迎页面-X-admin2.2</title>
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+        <link rel="stylesheet" href="../static/css/font.css">
+        <link rel="stylesheet" href="../static/css/xadmin.css">
+        <script src="../static/lib/layui/layui.js" charset="utf-8"></script>
+        <script type="text/javascript" src="../static/js/xadmin.js"></script>
+        <!--[if lt IE 9]>
+          <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+          <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="layui-fluid" id="divvuehtml">
+            <div class="layui-row layui-col-space15">
+                  <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-header">系统信息</div>
+                        <div class="layui-card-body ">
+                            <table class="layui-table">
+                                <colgroup>
+                                <col width="10%">
+                                <col width="40%">
+                                <col width="10%">
+                                <col width="40%">
+                                <col>
+                                <tbody>
+                                    <tr>
+                                        <th>用户名</th>
+                                        <td>{{systemItems.server_username}}</td>
+                                        <th>计算机名</th>
+                                        <td>{{systemItems.server_computername}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>本机ip</th>
+                                        <td>{{systemItems.ip}}</td>
+                                        <th>本机主机名</th>
+                                        <td>{{systemItems.ipname}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>内核构架</th>
+                                        <td>{{systemItems.arch}}</td>
+                                        <th>操作系统的版本号</th>
+                                        <td>{{systemItems.version}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>操作系统</th>
+                                        <td>{{systemItems.name}}</td>
+                                        <th>运行环境</th>
+                                        <td>{{systemItems.jvm_version}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>内存总量</th>
+                                        <td colspan="3">{{systemItems.memory_total}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>当前内存使用量</th>
+                                        <td>{{systemItems.memory_used}}</td>
+                                        <th>当前内存剩余量</th>
+                                        <td>{{systemItems.memory_free}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>JVM可以使用的总内存</th>
+                                        <td>{{systemItems.jvm_total}}</td>
+                                        <th>JVM可以使用的剩余内</th>
+                                        <td>{{systemItems.jvm_free}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>运行环境供应商</th>
+                                        <td>{{systemItems.jvm_vendor}}</td>
+                                        <th>运行时环境规范版本</th>
+                                        <td>{{systemItems.jvm_spversion}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Java的安装路径</th>
+                                        <td>{{systemItems.jvm_home}}</td>
+                                        <th>Java的类路径</th>
+                                        <td>{{systemItems.jvm_classpath}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Java加载库时搜索的路径列表</th>
+                                        <td>{{systemItems.jvm_path}}</td>
+                                        <th>临时文件路径</th>
+                                        <td>{{systemItems.jvm_tmpdir}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="layui-col-sm12 layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">内存使用量</div>
+                        <div class="layui-card-body" style="min-height: 280px;">
+                            <div id="main3" class="layui-col-sm12" style="height: 300px;"></div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-sm12 layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">CPU使用量</div>
+                        <div class="layui-card-body" style="min-height: 280px;">
+                            <div id="main5" class="layui-col-sm12" style="height: 300px;"></div>
+
+                        </div>
+                    </div>
+                </div>
+              
+            </div>
+        </div>
+        <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
+        <script type="text/javascript" src="../static/js/jquery.min.js"></script>
+        <script type="text/javascript" src="../static/js/vue.js"></script>
+        <script type="text/javascript">
+        window.setInterval(inin,3000); 
+        var ve = new Vue({
+        	el: '#divvuehtml',//绑定vue渲染范围
+     	    data: {
+     	        systemItems:[]
+     	    },created: function () {
+     	    	
+     	    },mounted: function () {//初始化html完成后在进行操作
+    	        this.ininutil(); 
+    	    },methods: {//调用函数
+    	         ininutil :function (){
+    	        	 inin();
+  	           }
+  	       }
+        })
+        
+        function inin(){
+        	$.get("/admin/system/server.do",{},function(data){
+        		  ve.systemItems = data;
+        		  drawnc(Math.round(data.memory_used/data.memory_total*100));
+        		  drawcpu(data.cpu);
+        	  },"json")
+        }
+        
+        function drawnc(type){
+        	// 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('main3'));
+
+            // 指定图表的配置项和数据
+            var option = {
+                tooltip : {
+                    formatter: "{a} <br/>{b} : {c}%"
+                },
+                series: [
+                    {
+                        name: '内存使用量',
+                        type: 'gauge',
+                        detail: {formatter:'{value}%'},
+                        data: [{value:type, name: '已使用'}]
+                    }
+                ]
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        }
+        
+        function drawcpu(cpu){
+        	var num=Math.round((parseFloat(cpu[0].freq_combined.replace(/%/, ""))+parseFloat(cpu[1].freq_combined.replace(/%/, ""))+parseFloat(cpu[2].freq_combined.replace(/%/, ""))+parseFloat(cpu[3].freq_combined.replace(/%/, "")))/4);
+        	// 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('main5'));
+            // 指定图表的配置项和数据
+            var option = {
+                tooltip : {
+                    formatter: "{a} <br/>{b} : {c}%"
+                },
+                series: [
+                    {
+                        name: 'CPU使用量',
+                        type: 'gauge',
+                        detail: {formatter:'{value}%'},
+                        data: [{value:num, name: '已使用'}]
+                    }
+                ]
+            };
+            /* option = {
+            	    tooltip : {
+            	        trigger: 'axis',
+            	        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            	            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            	        }
+            	    },
+            	    legend: {
+            	        data:['用户使用率', '系统使用率','当前等待率','当前错误率','当前空闲率','总的使用率']
+            	    },
+            	    toolbox: {
+            	        show : true,
+            	        feature : {
+            	            mark : {show: true},
+            	            dataView : {show: true, readOnly: false},
+            	            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+            	            restore : {show: true},
+            	            saveAsImage : {show: true}
+            	        }
+            	    },
+            	    calculable : true,
+            	    xAxis : [
+            	        {
+            	            type : 'value'
+            	        }
+            	    ],
+            	    yAxis : [
+            	        {
+            	            type : 'category',
+            	            data : ['CPU1','CPU2','CPU3','CPU4']
+            	        }
+            	    ],
+            	    series : [
+            	        {
+            	            name:'用户使用率',
+            	            type:'bar',
+            	            stack: '总量',
+            	            itemStyle : { normal: {label : {show: true, position: 'insideRight'}}},
+            	            data:[cpu[0].freq_user.replace(/%/, ""), cpu[0].freq_user.replace(/%/, ""), cpu[2].freq_user.replace(/%/, ""), cpu[3].freq_user.replace(/%/, "")]
+            	        },
+            	        {
+            	            name:'系统使用率',
+            	            type:'bar',
+            	            stack: '总量',
+            	            itemStyle : { normal: {label : {show: true, position: 'insideRight'}}},
+            	            data:[cpu[0].freq_sys.replace(/%/, ""), cpu[1].freq_sys.replace(/%/, ""), cpu[2].freq_sys.replace(/%/, ""), cpu[3].freq_sys.replace(/%/, "")]
+            	        },
+            	        {
+            	            name:'当前等待率',
+            	            type:'bar',
+            	            stack: '总量',
+            	            itemStyle : { normal: {label : {show: true, position: 'insideRight'}}},
+            	            data:[cpu[0].freq_wait.replace(/%/, ""), cpu[1].freq_wait.replace(/%/, ""), cpu[2].freq_wait.replace(/%/, ""), cpu[3].freq_wait.replace(/%/, "")]
+            	        },
+            	        {
+            	            name:'当前错误率',
+            	            type:'bar',
+            	            stack: '总量',
+            	            itemStyle : { normal: {label : {show: true, position: 'insideRight'}}},
+            	            data:[cpu[0].freq_nice.replace(/%/, ""), cpu[1].freq_nice.replace(/%/, ""), cpu[2].freq_nice.replace(/%/, ""), cpu[3].freq_nice.replace(/%/, "")]
+            	        },
+            	        {
+            	            name:'当前空闲率',
+            	            type:'bar',
+            	            stack: '总量',
+            	            itemStyle : { normal: {label : {show: true, position: 'insideRight'}}},
+            	            data:[cpu[0].freq_idle.replace(/%/, ""), cpu[1].freq_idle.replace(/%/, ""), cpu[2].freq_idle.replace(/%/, ""), cpu[3].freq_idle.replace(/%/, "")]
+            	        },
+            	        {
+            	            name:'总的使用率',
+            	            type:'bar',
+            	            stack: '总量',
+            	            itemStyle : { normal: {label : {show: true, position: 'insideRight'}}},
+            	            data:[cpu[0].freq_combined.replace(/%/, ""), cpu[1].freq_combined.replace(/%/, ""), cpu[2].freq_combined.replace(/%/, ""), cpu[3].freq_combined.replace(/%/, "")]
+            	        }
+            	    ]
+            	}; */
+            	                    
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        }
+    </script>
+    </body>
+</html>

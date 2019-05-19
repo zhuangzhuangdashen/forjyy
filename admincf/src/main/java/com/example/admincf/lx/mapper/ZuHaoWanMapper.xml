@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lx.dao.ZuHaoWanDao" >
+
+  <!--新增租号玩数据 -->
+  <insert id="saveZuHaoWan"  useGeneratedKeys = "true"   keyProperty = "ID"  parameterType="com.lx.pojo.po.ZuHaoWan">
+   insert into zuhaowan( userid, hid, pn, n, t, pm, zone_name, server_name,game_name,createtime, updatetime )
+    values
+   (#{userid}, #{hid}, #{pn}, #{n}, #{t}, #{pm}, #{zone_name}, #{server_name}, #{game_name},now(), now() )
+  </insert>
+  
+  <select id="getZhuHaoWanlistAll" resultType="com.lx.pojo.po.ZuHaoWan" parameterType="com.lx.pojo.vo.ZuHaoWanVo">
+     select * from zuhaowan 
+     <where>1=1</where>
+     <if test="t!=null">
+     <if test="t.userid!=null and t.userid!=''">
+     and userid=#{t.userid} 
+     </if>
+     </if>
+     order by createtime desc limit #{page},#{rows} 
+  </select>
+  
+  <select id="getZhuHaoWanlistCount" resultType="java.lang.Integer" parameterType="com.lx.pojo.vo.ZuHaoWanVo">
+       select count(*) from zuhaowan
+       <where>1=1</where>
+       <if test="t!=null">
+       <if test="t.userid!=null and t.userid!=''">
+        and userid=#{t.userid} 
+       </if>
+       </if>
+  </select>
+  
+</mapper>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lx.dao.MenuDao" >
+  <resultMap id="BaseResultMap" type="com.lx.pojo.po.Menu" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="parent_id" property="parent_id" jdbcType="INTEGER" />
+    <result column="menu_name" property="menu_name" jdbcType="VARCHAR" />
+    <result column="menu_href" property="menu_href" jdbcType="VARCHAR" />
+    <result column="menu_icon" property="menu_icon" jdbcType="VARCHAR" />
+    <result column="menu_state" property="menu_state" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+ 
+  <sql id="Base_Column_List" >
+    id, parent_id, menu_name,menu_href,menu_icon
+  </sql>
+  
+  <sql id="Base_Column_List2" >
+    id, parent_id, menu_name,menu_href,menu_icon,menu_state,createtime,updatetime
+  </sql>
+  
+  <!-- 获取所有菜单集合 -->
+  <select id="selectMenuListAll" resultMap="BaseResultMap">
+     select 
+     <include refid="Base_Column_List" />
+     from menu where menu_state=0
+  </select>
+  
+   <!--根据父级菜单ID获取菜单信息 -->
+  <select id="selectMenuById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+     select 
+     <include refid="Base_Column_List" />
+     from menu where parent_id=#{id}
+  </select>
+  
+  <!-- 获取所有菜单集合 -->
+  <select id="getlistAll" resultMap="BaseResultMap" parameterType="com.lx.pojo.vo.MenuVo">
+     select 
+     <include refid="Base_Column_List2" />
+     from menu
+     limit #{page},#{rows} 
+  </select>
+  
+  <select id="getlistcount" resultType="java.lang.Integer" parameterType="com.lx.pojo.vo.MenuVo">
+     select 
+     count(*)
+     from menu
+  </select>
+  
+
+
+</mapper>
